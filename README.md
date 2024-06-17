@@ -27,7 +27,7 @@ This repository contains the code and documentation for a project focused on dev
    - Compares different predictive models and variable selection methods to identify the most effective approaches.
 
 5. **Deployment**
-   - The final model is deployed in a Shiny app. You can access the Shiny app to predict the probability of survival in breast cancer patients based on the selected variables by visiting this [link]([webpage](https://alexsilvaa9.github.io/BreasCancerSurvivalPrediction/).
+   - The final model is deployed in a Shiny app. You can access the Shiny app to predict the probability of survival in breast cancer patients based on the selected variables by visiting this [link]([webpage](https://alexsilvaa9.github.io/BreasCancerSurvivalPrediction/)).
 
 ---
 
