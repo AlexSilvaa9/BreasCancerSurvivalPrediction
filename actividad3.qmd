@@ -892,11 +892,71 @@ summary(filtered_data)
 
 # Models
 
+ 
 The aim of this section is to build a predictive model to estimate the survival chance. We are going to compare different models and select the one that provides the best performance based on the evaluation metrics. On top of that, we are going to compare the different variable selection methods to determine the most effective approach. 
 
 For each model, we will evaluate the performance using a hold-out validation and a 5x2 cross-validation to ensure the honesty of the results, it is a good compromise between computational cost and robustness of the results.
 
-## First Aproach
+## Flow Diagram
+
+Flow diagram for the model building process:
+
+
+```{r,eval=FALSE}
+library(DiagrammeR)
+
+# Definir el grafo
+gr <- "
+digraph {
+  layout=dot;
+  node [shape=circle, style=filled, fillcolor=\"#E2BBE9\", fontname=\"Arial\", fontsize=90, tooltip=\"Haz clic para más detalles\",fixedsize = FALSE];
+  edge [color=black, arrowhead=vee];
+  
+  Data_Cleaning -> Statistical_Analysis;
+  Statistical_Analysis -> Model_Comparison;
+  Model_Comparison -> Logistic_Regression;
+  Model_Comparison -> Neural_Networks;
+  Model_Comparison -> Support_Vectors_Machine;
+  Model_Comparison -> Decision_Tree;
+  Model_Comparison -> Random_Forest;
+  Model_Comparison -> Naive_Bayes;
+  Model_Comparison -> K_Nearest_Neighbors;
+  Model_Comparison -> AdaBoost;
+  Model_Comparison -> Best_Model;
+  Best_Model -> Threshold_Optimization;
+  Best_Model -> Best_Variables_Selection;
+  Best_Variables_Selection -> Deployment;
+  Threshold_Optimization -> Deployment;
+  Model_Comparison -> Data_Cleaning;
+}
+"
+
+# Crear el gráfico
+graph <- grViz(gr,width = 1200, height = 800)
+graph
+```
+
+
+
+```{=html}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+<div style="max-width: 600px; margin: 0 auto;">
+    <a href="diagrama.png" data-lightbox="imagen" data-title="Diagram">
+        <img src="diagrama.png" style="width: 100%; height: auto; border: 2px solid #ddd; border-radius: 5px;" alt="Diagram">
+        <p style="text-align: center; margin-top: 5px; font-size: 14px;"><em>Click to enlarge</em></p>
+    </a>
+</div>
+<br>
+
+```
+
+
+::: {.panel-tabset style="background-color: rgb(226, 231, 236);box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);border-radius: 5px;"}
+
+
+# First Aproach
 
 In this section we are going to build a logistic regression model using all the data aiming to see if the model is able to predict the target variable with a good accuracy.
 
@@ -909,7 +969,7 @@ predicciones <- predict(modelo_primero, newdata = data, type = "response")
 ```
 ::: {.panel-tabset}
 
-### Predictions
+## Predictions
 
 ```{r}
 # Calcular las predicciones para el conjunto de test
@@ -919,16 +979,16 @@ clases_predichas <- ifelse(predicciones>= 0.8, "Vivo", "Exitus")
 mostrar_metricas(data$ESTADO_ACTUAL,clases_predichas)
 ```
 
-### Roc curve and auc
+## Roc curve and auc
 
 ```{r}
 # Calcular la curva ROC y el AUC para el conjunto de test
 plot_roc_curve(predicciones,data$ESTADO_ACTUAL)
 ```
-At first sight the model seems to be accurate, the metrics are too optimistic though.
 :::
+At first sight the model seems to be accurate, the metrics are too optimistic though.
 
-::: {.panel-tabset style="background-color: rgb(226, 231, 236);box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);border-radius: 5px;"}
+
 
 # Logistic Regression {#logistic-regression}
 
@@ -4430,9 +4490,9 @@ crear_comparacion_metricas <- function(lista_tablas_metricas, nombres_tablas) {
   # Crear el gráfico
   plot <- ggplot(tabla_metricas_long, aes(x = Modelo, y = Valor, fill = Metrica)) +
     geom_bar(stat = "identity", position = "dodge") +
-    labs(title = "Comparación de métricas entre modelos", x = "Modelo", y = "Valor") +
+    labs(title = "Metrics comparation btween models", x = "Model", y = "Value") +
     theme_minimal() +
-    scale_fill_manual(values = c("AUC" = "steelblue", "Accuracy" = "lightblue", "Recall" = "#3C5B6F", "Specificity" = "#E2BBE9"), name = "Métrica") +
+    scale_fill_manual(values = c("AUC" = "steelblue", "Accuracy" = "lightblue", "Recall" = "#3C5B6F", "Specificity" = "purple"), name = "Métrica") +
     theme(plot.background = element_rect(color = rgb(226, 231, 236, maxColorValue = 255), size = 1.5)) +
     scale_y_continuous(limits = c(0, 1), expand = c(0, 0))  # Ajustar el eje y de 0 a 1 y sin espacio adicional
   
@@ -5258,3 +5318,6 @@ URL:http://ascama.gepac.es/informacion-medica/etapas-y-grado-histologico/
 </div>
 ```
 importante quitar cellnoseq de los statistic analisis
+
+
+
