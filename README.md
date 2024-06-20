@@ -10,6 +10,10 @@
 
 This repository contains the code and documentation for a project focused on developing predictive models in biomedicine, particularly aimed at estimating the probability of survival in cancer patients. The project employs a dataset comprising clinical and demographic variables related to cancer patients.
 
+<p align="center">
+  <img src="comp.png" alt="Comparison" style="height: 500px; margin-right: 20px;">
+  <img src="statistics.png" alt="Statistical Analisis" style="height: 500px; margin-left: 20px;">
+</p>
 ---
 
 ### Table of Contents
