@@ -14,6 +14,7 @@ This repository contains the code and documentation for a project focused on dev
   <img src="comp.png" alt="Comparison" style="height: 300px; margin-right: 20px;">
   <img src="statistics.png" alt="Statistical Analisis" style="height: 300px; margin-left: 20px;">
 </p>
+
 ---
 
 ### Table of Contents
